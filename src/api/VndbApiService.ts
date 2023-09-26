@@ -97,7 +97,7 @@ const VndbApiService = {
         title.orgCompany = "";
         title.locCompany = "";
       } else {
-        console.log('didnt find index');
+        console.log('didnt find index, cry');
       }
       titles.push(title);
     }
