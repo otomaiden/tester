@@ -1,80 +1,92 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-</script>
-
 <template>
-  <header>
-    <div class="wrapper">
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <div class="light-theme">
+    <Transition name="testing">
+      <div ref="pageContainer" class="page-container">
+        <NavigationComponent @change-navigation-bar="changeNavigationBar"/>
+        <div class="main-content test">
+          <Transition>
+            <RouterView />
+          </Transition>
+        </div>
+      </div>
+    </Transition>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+<script setup lang="ts">
+import { RouterView } from 'vue-router'
+import NavigationComponent from './components/NavigationComponent.vue'
+import { ref } from 'vue';
+
+const pageContainer = ref<HTMLDivElement>();
+
+const theme = localStorage.getItem('theme');
+if (theme !== null){
+  document.documentElement.className = theme;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+function changeNavigationBar(sidebarHidden: boolean) {
+  if (sidebarHidden) {
+    pageContainer.value?.classList.add('page-container-sidebar-hidden');
+  } else {
+    pageContainer.value?.classList.remove('page-container-sidebar-hidden');
   }
+}
+</script>
 
-  .logo {
-    margin: 0 2rem 0 0;
+
+<style lang="scss" scoped>
+.page-container {
+  display: flex;
+  gap: 32px;
+  max-width: 1500px;
+  // background-color: lightblue;
+  margin: 0 auto;
+  padding-top: 32px;
+  transition: color 0.3s;
+  .main-content {
+    margin: 16px 0;
   }
+}
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+@media screen and (max-width: $max-width) {
+  .page-container {
+    padding-top: 0; 
   }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
+  .page-container-sidebar-hidden {
+    display: block;
+    gap: 0px;
+    .main-content {
+      margin: 0 16px;
+    }
+    .main-content {
+      position: absolute;
+      top: calc(50px + 16px);
+      transition: margin 0.5s;
+    }
   }
+}
+@keyframes mymove {
+  from {top: 0px;}
+  to {top: 200px;}
+}
+.test {
+  animation: mymove 5s;
+}
+
+
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  transform: translateX(-20px);
+  opacity: 0;
+}
+
+.testing-enter-active {
+  transition: opacity 0.5s ease;
 }
 </style>

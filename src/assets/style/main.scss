@@ -1,0 +1,36 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+#app {
+  font-family: Open Sans, Arial, Helvetica, sans-serif;
+  font-weight: normal;
+}
+
+body {
+  margin: 0;
+  background: var(--body);
+  color: var(--text-col);
+  background-image: linear-gradient(var(--bg), rgba(var(--pri-c-rgb), 0.1));
+  background-attachment: fixed;
+}
+.dark-theme body {
+  background-image: none;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24;
+  color: $sec-c;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+h1 {
+  margin: 0px;
+}

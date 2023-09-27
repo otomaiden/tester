@@ -14,4 +14,11 @@ export default defineConfig({
     }
   },
   base: '/tester/',
+  css: {
+    preprocessorOptions: {
+      scss: {
+          additionalData: `@import "@/assets/style/variables.scss";`,
+      },
+    },
+  }
 })
